@@ -12,7 +12,10 @@
 
 @property (nonatomic,copy)NSString *appName;
 @property (nonatomic,copy)NSString *urlScheme;
-@property (nonatomic,copy)NSString *currentAddress;
+
+// 百度地图用的到 (可选)
+@property (nonatomic,copy)NSString *toAddress;
+
 @end
 
 @implementation ViewController
@@ -35,7 +38,8 @@
     
     self.appName = @"URLNavi";
     self.urlScheme = @"URLNavi";
-    self.currentAddress = @"大望路123号";
+
+    self.toAddress = @"天安门";
     
     _myLocation = CLLocationCoordinate2DMake(39.266666, 115.2888888);
     _toLacation = CLLocationCoordinate2DMake(39.299999, 116.2888888);
@@ -77,7 +81,7 @@
         MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
         MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:_toLacation addressDictionary:nil]];
         
-        toLocation.name = self.currentAddress;
+        toLocation.name = self.toAddress;
         
         [MKMapItem openMapsWithItems:@[currentLocation, toLocation]
                        launchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,MKLaunchOptionsShowsTrafficKey: [NSNumber numberWithBool:YES]}];
@@ -95,7 +99,7 @@
                                 _myLocation.latitude,_myLocation.longitude,
                                 _toLacation.latitude,
                                 _toLacation.longitude,
-                                self.currentAddress] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                                self.toAddress] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
         NSLog(@"%@",urlString);
         
